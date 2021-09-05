@@ -2,7 +2,7 @@
 <div>
   <v-navigation-drawer
       v-model="drawer"
-      absolute
+      app
       temporary
     >
       <v-list
@@ -42,6 +42,7 @@
     </v-navigation-drawer>
     <v-app-bar
       dark
+      fixed
     >
       <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
 

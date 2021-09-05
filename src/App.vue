@@ -95,10 +95,15 @@ export default {
 
 @import url('https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
 
+main{
+  padding-bottom: 250px !important;
+}
+
 .container{
   width: 100%;
   min-height: 100%;
   height: 1px;
+  margin-top: 56px;
 }
 a{
 	text-decoration: none;

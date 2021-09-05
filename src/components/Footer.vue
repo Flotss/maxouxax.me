@@ -1,5 +1,7 @@
 <template>
   <v-footer
+    inset
+    width="auto"
     dark
     padless
   >
@@ -49,6 +51,7 @@
 <style>
 footer{
     width: 100%;
+    margin-top: auto;
 }
 footer .copyright{
     user-select: none;

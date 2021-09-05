@@ -47,6 +47,10 @@
 }
 .buttons{
 	margin: 35px;
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
 }
 .buttons a{
 	margin: 5px;
