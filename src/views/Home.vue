@@ -52,6 +52,11 @@
     align-items: center;
     align-content: center;
 }
+@media screen and (min-width: 800px){
+	.buttons{
+		flex-direction: row;
+	}
+}
 .buttons a{
 	margin: 5px;
 }
