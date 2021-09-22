@@ -21,6 +21,26 @@ const routes = [
     path: '/projects',
     name: 'Projets',
     component: () => import('../views/Projects.vue')
+  },
+  {
+    path: '/groubox',
+    name: 'GROUBOX',
+    component: () => import('../views/GROUBOX.vue')
+  },
+  {
+    path: '/uppercasegenerator',
+    name: 'UpperCaseGenerator',
+    component: () => import('../views/UpperCaseGenerator.vue')
+  },
+  {
+    path: '/mejri',
+    name: 'MEJRI',
+    component: () => import('../views/MEJRI.vue')
+  },
+  {
+    path: "*",
+    name: 'Page introuvable',
+    component: () => import('../views/404.vue')
   }
 ]
 
