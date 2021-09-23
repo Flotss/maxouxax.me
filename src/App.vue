@@ -2,7 +2,7 @@
   <v-app>
     <Header></Header>
     <v-main>
-      <v-container fluid>
+      <v-container fill-height fluid>
         <transition
           name="slide-down"
           mode="out-in"
@@ -100,7 +100,9 @@ export default {
 .container{
   width: 100%;
   min-height: 100%;
-  margin-top: 56px;
+}
+.v-main{
+  margin: 24px 0px;
 }
 a{
 	text-decoration: none;

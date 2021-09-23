@@ -1,25 +1,25 @@
 <template>
-	<div>
-		<header>
+	<div id="uppercasegenerator">
+		<div class="header">
             <div class="title">
                 <p id="title">UpperCaseGenerator</p>
             </div>
             <div class="divider"></div>
-        </header>
-        <main>
+        </div>
+        <div class="main">
             <div class="convert">
                 <div class="input">
                     <p>Texte à modifier</p>
-                    <textarea class="textarea" id="input" name="Texte à modifier" maxlength="900"></textarea>
+                    <textarea v-model="text" class="textarea" id="input" name="Texte à modifier" maxlength="900"></textarea>
                 </div>
                 <div class="output">
                     <p>Résultat</p>
-                    <textarea class="resultarea" id="output" name="Résultat" readonly="readonly"></textarea>
+                    <textarea v-model="transformText" class="resultarea" id="output" name="Résultat" readonly="readonly"></textarea>
                 </div>
                 <div class="clipboard">
-                    <button onclick="copyToClipboard()">Copier</button>
+                    <button @click="copyToClipboard()">Copier</button>
                     <br>
-                    <i id="clip" class="fas fa-check fa-5x"></i>
+                    <v-icon id="clip" size="96px">mdi-check</v-icon>
                 </div>
             </div>
             <div class="divider"></div>
@@ -30,46 +30,46 @@
                     <p class="about">Pour utiliser ce mini-service, il vous suffit d'écrire votre texte original dans l'emplacement prévu à cet effet, et le site se chargera de tout. Vous pourrez retrouver le résultat dans l'emplacement juste en dessous.</p>
                 </div>
             </div>
-        </main>
+        </div>
 	</div>
 </template>
 
 <script>
 export default {
-
-}
-var schedule = setInterval(updateData, 500);
-var displayedText = "";
-
-function updateData(){
-    var text = document.getElementById("input").value;
-    if(!(text == displayedText)){
-        var str = "";
-        for (var i = 0; i < text.length; i++) {
-            (i % 2) ? str = str+text.charAt(i).toUpperCase() : str = str+text.charAt(i).toLowerCase();
+    data: function(){
+        return {
+            text: ""
         }
-        displayedText = str;
-        document.getElementById("output").value = displayedText;
+    },
+    methods: {
+        copyToClipboard: function(){
+            var copyText = document.getElementById("output");
+            var check = document.getElementById("clip");
+
+            copyText.select();
+
+            document.execCommand("copy");
+            check.style.transform = 'scale(1,1)';
+            setTimeout(() => {
+                check.style.transform = 'scale(0,0)'
+            }, 1500);
+        }
+    },
+    computed: {
+        transformText: function(){
+            var str = "";
+            for (var i = 0; i < this.text.length; i++) {
+                (i % 2) ? str = str+this.text.charAt(i).toUpperCase() : str = str+this.text.charAt(i).toLowerCase();
+            }
+            return str;
+        }
     }
-}
-
-function copyToClipboard(){
-  var copyText = document.getElementById("output");
-  var check = document.getElementById("clip");
-
-  copyText.select();
-
-  document.execCommand("copy");
-  check.style.transform = 'scale(1,1)';
-  setTimeout(() => {
-      check.style.transform = 'scale(0,0)'
-  }, 1500);
 }
 </script>
 
 <style scoped>
-body{
-    background-color: #070707;
+#uppercasegenerator{
+    width: 100%;
 }
 .title{
     color: white;
@@ -102,7 +102,7 @@ body{
     font-size: 5vw;
     transition: 1.4s cubic-bezier(0.86, 0, 0.07, 1);
 }
-footer{
+.footer{
     font-family: 'Roboto', sans-serif;
     padding: 10px;
     position: relative;
@@ -112,7 +112,7 @@ footer{
     background-image: linear-gradient(#070707 , black);
     transition: 1.4s cubic-bezier(0.86, 0, 0.07, 1);
 }
-footer:hover{
+.footer:hover{
     box-shadow: 0px 0px 100px white;
     transition: 1.4s cubic-bezier(0.86, 0, 0.07, 1);
 }
@@ -124,11 +124,11 @@ html,body{
     margin:0;
     padding:0;
 }
-main{
+.main{
     animation-name: appearing;
     animation-duration: 2s;
 }
-header{
+.header{
     animation-name: appearing;
     animation-duration: 2s;
 }
