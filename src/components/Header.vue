@@ -1,5 +1,5 @@
 <template>
-<div>
+<div id="header">
   <v-navigation-drawer
       v-model="drawer"
       app
@@ -61,7 +61,8 @@
 </script>
 
 <style scoped>
-div{
+#header{
     width: 100%;
+    margin-bottom: 64px;
 }
 </style>
