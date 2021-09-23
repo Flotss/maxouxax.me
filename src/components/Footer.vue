@@ -30,7 +30,7 @@
       <v-divider></v-divider>
 
       <v-card-text class="copyright white--text">
-        {{ new Date().getFullYear() }} — <strong>MAXOUXAX</strong>
+        <v-icon size="14px">mdi-copyright</v-icon> {{ new Date().getFullYear() }} — <strong>MAXOUXAX</strong>
       </v-card-text>
     </v-card>
   </v-footer>
@@ -51,11 +51,17 @@
 <style>
 footer{
     width: 100%;
-    margin-top: auto;
 }
 footer .copyright{
     user-select: none;
     -webkit-user-select: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+footer .copyright *{
+    margin: 0px 3px;
 }
 footer div{
     width: 100%;

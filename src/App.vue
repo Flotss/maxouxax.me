@@ -7,7 +7,8 @@
           name="slide-down"
           mode="out-in"
           @beforeLeave="beforeLeave"
-          @enter="enter">
+          @enter="enter"
+          @afterEnter="afterEnter">
           <router-view></router-view>
         </transition>
       </v-container>    
@@ -64,6 +65,7 @@ export default {
       });
     },
     afterEnter(element) {
+      console.log("test");
       element.style.height = 'auto';
     },
   }
@@ -76,7 +78,7 @@ export default {
 .slide-up-enter-active,
 .slide-up-leave-active {
   transition-duration: 0.5s;
-  transition-property: height, opacity, transform;
+  transition-property: opacity, transform;
   transition-timing-function: cubic-bezier(0.55, 0, 0.1, 1);
   overflow: hidden;
 }
@@ -95,14 +97,9 @@ export default {
 
 @import url('https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
 
-main{
-  padding-bottom: 250px !important;
-}
-
 .container{
   width: 100%;
   min-height: 100%;
-  height: 1px;
   margin-top: 56px;
 }
 a{
