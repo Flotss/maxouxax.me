@@ -11,7 +11,7 @@
       class="lighten-1 white--text text-center"
     >
       <v-card-text>
-        <a v-for="icon in icons" :key="icon.icon" :href="icon.link" target="_blank">
+        <a rel="noreferrer" v-for="icon in icons" :key="icon.icon" :href="icon.link" target="_blank">
         <v-btn
           class="mx-4 white--text"
           icon
@@ -40,9 +40,9 @@
   export default {
     data: () => ({
       icons: [
-        {icon: 'mdi-twitter', link: 'https://twitter.com/MAXOUXAX/'},
-        {icon: 'mdi-youtube', link: 'https://youtube.com/MAXOUXAX'},
-        {icon: 'mdi-github', link: 'https://github.com/MAXOUXAX'},
+        {icon: 'mdi-twitter', link: 'https://twitter.com/MAXOUXAX/', name: 'Twitter'},
+        {icon: 'mdi-youtube', link: 'https://youtube.com/MAXOUXAX', name: 'YouTube'},
+        {icon: 'mdi-github', link: 'https://github.com/MAXOUXAX', name: 'GitHub'},
       ],
     }),
   }
