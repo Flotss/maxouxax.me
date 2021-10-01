@@ -6,6 +6,7 @@
         <transition
           name="slide-down"
           mode="out-in"
+          appear
           @beforeLeave="beforeLeave"
           @enter="enter"
           @afterEnter="afterEnter">
