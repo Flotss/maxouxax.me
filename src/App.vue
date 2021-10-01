@@ -6,6 +6,7 @@
         <transition
           name="slide-down"
           mode="out-in"
+          appear
           @beforeLeave="beforeLeave"
           @enter="enter"
           @afterEnter="afterEnter">
@@ -65,7 +66,6 @@ export default {
       });
     },
     afterEnter(element) {
-      console.log("test");
       element.style.height = 'auto';
     },
   }

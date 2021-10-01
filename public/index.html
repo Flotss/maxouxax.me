@@ -31,20 +31,4 @@
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>
-  <script>
-  window.addEventListener('keypress', (function() {
-    var strToType = 'gifmejri',
-        strTyped = '';
-    return function( event ) {
-        var character = String.fromCharCode(event.which);
-        strTyped += character;
-        if (strToType.indexOf(strTyped) === -1) strTyped = '';
-        else if (strTyped === strToType) {
-            strTyped = '';
-            window.location = "/mejri";
-        }
-    };
-}()) );
-  
-  </script>
 </html>
