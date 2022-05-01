@@ -20,10 +20,7 @@ async function getInfo(search) {
 		{
 			referrer: "https://annuaire-web.univ-lorraine.fr/",
 			referrerPolicy: "strict-origin-when-cross-origin",
-			body: null,
 			method: "GET",
-			mode: "cors",
-			credentials: "include",
 		})
 		.then(response => response.json())
 		.then(data => {
@@ -32,10 +29,7 @@ async function getInfo(search) {
 	let image = await fetch("https://annuaire-web.univ-lorraine.fr/rest/getphoto?valeur=" + item.empid, {
 		"referrer": "https://annuaire-web.univ-lorraine.fr/",
 		"referrerPolicy": "strict-origin-when-cross-origin",
-		"body": null,
 		"method": "GET",
-		"mode": "cors",
-		"credentials": "include"
 	}).then(response => response.json()).then(data => data.url);
 	item.image = image;
 	return item;
