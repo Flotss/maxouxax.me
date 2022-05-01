@@ -18,8 +18,6 @@ async function getInfo(search) {
 		search +
 		"&selectedid=&filtervalue=null&withvac=undefined",
 		{
-			referrer: "https://annuaire-web.univ-lorraine.fr/",
-			referrerPolicy: "strict-origin-when-cross-origin",
 			method: "GET",
 		})
 		.then(response => response.json())
@@ -27,8 +25,6 @@ async function getInfo(search) {
 			return data.items[0];
 		});
 	let image = await fetch("https://annuaire-web.univ-lorraine.fr/rest/getphoto?valeur=" + item.empid, {
-		"referrer": "https://annuaire-web.univ-lorraine.fr/",
-		"referrerPolicy": "strict-origin-when-cross-origin",
 		"method": "GET",
 	}).then(response => response.json()).then(data => data.url);
 	item.image = image;
