@@ -38,11 +38,7 @@ export default {
   computed: {
     breadCrumbsItems() {
       let items = [];
-      let currentRoute = this.$route.matched[0];
-      console.log("this.$route", this.$route);
-      console.log("currentRoute", currentRoute);
       let routePath = this.$route.path;
-      console.log("routePath", routePath);
       let routeParts = routePath.split("/");
       routeParts = routeParts.filter((part) => part !== "");
       if (routeParts.length >= 1) {
@@ -55,7 +51,6 @@ export default {
           let partRoute = this.$router.options.routes.find(
             (route) => route.path == "/" + part
           );
-          console.log("partRoute", partRoute);
           let name = partRoute ? partRoute.name : part;
           let routeTo = partRoute ? partRoute.path : "/" + routeParts.slice(0, index + 1).join("/");
           items.push({
