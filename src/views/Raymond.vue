@@ -1,21 +1,30 @@
 <template>
-  <div class="raymond mt-12 mx-xl-12 mx-lg-8 mx-md-8 mx-sm-4 mx-xs-2">
+  <div class="raymond mt-12 mx-xl-12 mx-lg-8 mx-md-8 mx-sm-4 mx-0">
     <div class="loading d-flex justify-center" v-if="loading">
-      <v-sheet :width="vSkeletonWidth" class="mx-5 my-4">
+      <v-sheet width="374px" class="mx-5 my-4">
         <v-skeleton-loader width="100%" type="card"></v-skeleton-loader>
       </v-sheet>
     </div>
-    <div class="error" v-if="!valid">
-      <h1>Error</h1>
+    <div class="invalid" v-if="!valid">
+      <v-alert
+        border="left"
+        icon="mdi-alert-circle"
+        transition="slide-y-transition"
+        elevation="4"
+        type="error"
+        max-width="620px"
+      >
+        Une erreur est survenue lors du chargement des informations. Veuillez
+        vérifier votre connexion Internet ou l'email fournie.
+      </v-alert>
     </div>
-    <div class="contact ma-4" v-if="!loading">
+    <div class="contact ma-4" v-if="!loading && valid">
       <div class="contact-info d-flex justify-center">
         <v-card flat color="transparent" class="mb-10">
-          <div class="d-flex align-content-center align-center">
-            <v-avatar class="profile mr-4" size="128">
+          <div class="profile d-flex align-content-center align-center">
+            <v-avatar class="profile" size="128">
               <v-img :src="teacher.image"></v-img>
             </v-avatar>
-            <v-divider vertical class="my-12"></v-divider>
             <div class="identity d-flex justify-center flex-column">
               <v-card-title class="text-h3 py-0 font-weight-bold">{{
                 teacher.displayName
@@ -38,77 +47,32 @@
         "
       >
         <p class="text-h4 font-weight-bold">
-          Choisissez la messagerie à utiliser
+          Quelle messagerie souhaitez-vous utiliser pour contacter
+          {{ teacher.displayName }} ?
         </p>
         <v-divider class="mx-16"></v-divider>
         <div class="options full-width d-flex justify-center flex-wrap">
           <v-card
             v-ripple
             class="mx-5 my-4 card"
-            :min-width="vCardWidth"
-            :width="vCardWidth"
+            :width="$vuetify.breakpoint.name === 'xs' ? '80vw' : '374px'"
+            max-width="374px"
             min-height="120"
             elevation="2"
             outlined
-            :href="
-              'https://mail.etu.univ-lorraine.fr/zimbra/mail?view=compose&to=' +
-              email
-            "
+            v-for="option in options"
+            :key="option.id"
+            :href="option.getUrl(email)"
+            :loading="option.loading"
+            @click="option.onClick()"
             raised
           >
-            <v-card-title
-              ><v-icon left>mdi-email</v-icon> Messagerie
-              universitaire</v-card-title
-            >
-            <v-card-subtitle
-              >Contactez {{ teacher.displayName }} via la messagerie de
-              l'Université de Lorraine</v-card-subtitle
-            >
+            <v-card-title>
+              <v-icon left>{{ option.icon }}</v-icon> {{ option.name }}
+            </v-card-title>
+            <v-card-subtitle>{{ option.description }}</v-card-subtitle>
           </v-card>
-          <v-card
-            v-ripple
-            class="mx-5 my-4 card"
-            :min-width="vCardWidth"
-            :width="vCardWidth"
-            min-height="120"
-            elevation="2"
-            outlined
-            :href="'mailto:' + email"
-            raised
-          >
-            <v-card-title
-              ><v-icon left>mdi-email</v-icon> Messagerie de mon
-              appareil</v-card-title
-            >
-            <v-card-subtitle
-              >Contactez {{ teacher.displayName }} via la messagerie par défaut
-              de votre appareil</v-card-subtitle
-            >
-          </v-card>
-          <v-card
-            v-ripple
-            class="mx-5 my-4 card"
-            :min-width="vCardWidth"
-            :width="vCardWidth"
-            min-height="120"
-            elevation="2"
-            outlined
-            :disabled="copied"
-            @click="
-              copyEmail();
-              copied = true;
-            "
-            raised
-          >
-            <v-card-title
-              ><v-icon left>mdi-clipboard-text</v-icon> Copier l'adresse
-              email</v-card-title
-            >
-            <v-card-subtitle
-              >Contactez {{ teacher.displayName }} via la messagerie de votre
-              choix en copiant simplement l'adresse email</v-card-subtitle
-            >
-          </v-card>
+
           <v-snackbar elevation="12" v-model="copied" timeout="3000">
             Adresse email copiée !
             <template v-slot:action="{ attrs }">
@@ -135,25 +99,77 @@ export default {
       email: "",
       loading: true,
       valid: true,
+      options: [
+        {
+          id: "univ-mail",
+          name: "Messagerie universitaire",
+          description: "Utiliser la messagerie de l'Université de Lorraine",
+          icon: "mdi-email",
+          loading: false,
+          getUrl(email) {
+            return (
+              "https://mail.etu.univ-lorraine.fr/zimbra/mail?view=compose&to=" +
+              email
+            );
+          },
+          onClick() {
+            this.loading = true;
+            setTimeout(() => {
+              this.loading = false;
+            }, 5000);
+          },
+        },
+        {
+          id: "default-mail",
+          name: "Messagerie par défaut",
+          description: "Utiliser la messagerie par défaut de votre appareil",
+          icon: "mdi-email",
+          loading: false,
+          getUrl(email) {
+            return "mailto:" + email;
+          },
+          onClick() {
+            this.loading = true;
+            setTimeout(() => {
+              this.loading = false;
+            }, 5000);
+          },
+        },
+        {
+          id: "copy-mail",
+          name: "Copier l'adresse email",
+          description: "Copier l'adresse email de l'enseignant",
+          icon: "mdi-clipboard-text",
+          loading: false,
+          getUrl(email) {
+            return null;
+          },
+          onClick() {
+            navigator.clipboard.writeText(this.email);
+            copied = true;
+          },
+        },
+      ],
     };
   },
   async mounted() {
     this.email = this.$route.params.email;
     if (this.email.match(emailPattern)) {
       let id = this.email.match(emailPattern)[1].split(".").join(" ");
-      this.teacher = await fetch("/api/raymond/get-info?search=" + id).then(
-        (response) => response.json()
-      );
-      this.email = this.decryptEmail(this.teacher.mail);
+      this.teacher = await fetch("/api/raymond/get-info?search=" + id)
+        .then((response) => response.json())
+        .catch(() => {
+          this.valid = false;
+        });
+      if (this.teacher != null && this.teacher.mail != null) {
+        this.email = this.decryptEmail(this.teacher.mail);
+      }
     } else {
       this.valid = false;
     }
     this.loading = false;
   },
   methods: {
-    copyEmail() {
-      navigator.clipboard.writeText(this.email);
-    },
     decryptEmail(email) {
       var n = 0;
       var r = "";
@@ -167,24 +183,6 @@ export default {
       return r;
     },
   },
-  computed: {
-    vSkeletonWidth() {
-      switch (this.$vuetify.breakpoint.name) {
-        case "xs":
-          return "80vw";
-        default:
-          return 374;
-      }
-    },
-    vCardWidth() {
-      switch (this.$vuetify.breakpoint.name) {
-        case "xs":
-          return "80vw";
-        default:
-          return 374;
-      }
-    },
-  },
 };
 </script>
 
@@ -192,5 +190,11 @@ export default {
 .raymond {
   height: 100%;
   width: 100%;
+}
+@media screen and (max-width: 600px) {
+  .profile {
+    flex-direction: column;
+    text-align: center;
+  } 
 }
 </style>
