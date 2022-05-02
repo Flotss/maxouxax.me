@@ -5,11 +5,12 @@
         <v-skeleton-loader width="100%" type="card"></v-skeleton-loader>
       </v-sheet>
     </div>
-    <div class="invalid" v-if="!valid">
+    <div class="invalid d-flex justify-center mx-2" v-show="!valid">
       <v-alert
         border="left"
         icon="mdi-alert-circle"
-        transition="slide-y-transition"
+        :value="!valid"
+        transition="slide-x-transition"
         elevation="4"
         type="error"
         max-width="620px"
