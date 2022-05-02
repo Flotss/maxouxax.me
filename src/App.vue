@@ -5,7 +5,7 @@
       <v-breadcrumbs :items="breadCrumbsItems"></v-breadcrumbs>
       <v-container fill-height fluid>
         <transition
-          name="slide-down"
+          name="slide-x-reverse-transition"
           mode="out-in"
           appear
           @beforeLeave="beforeLeave"
@@ -25,14 +25,11 @@ import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
 import CSSMetaProperties from "@/components/CSSMetaProperties.vue";
 
-const DEFAULT_TRANSITION = "slide";
-
 export default {
   name: "App",
   data() {
     return {
       prevHeight: 0,
-      transitionName: DEFAULT_TRANSITION,
     };
   },
   computed: {
@@ -69,21 +66,6 @@ export default {
     Header,
     CSSMetaProperties
   },
-  created() {
-    this.$router.beforeEach((to, from, next) => {
-      let transitionName = to.meta.transitionName || from.meta.transitionName;
-
-      if (transitionName === "slide") {
-        const toDepth = to.path.split("/").length;
-        const fromDepth = from.path.split("/").length;
-        transitionName = toDepth < fromDepth ? "slide-down" : "slide-up";
-      }
-
-      this.transitionName = transitionName || DEFAULT_TRANSITION;
-
-      next();
-    });
-  },
   methods: {
     beforeLeave(element) {
       this.prevHeight = getComputedStyle(element).height;
@@ -105,28 +87,6 @@ export default {
 </script>
 
 <style>
-.slide-down-enter-active,
-.slide-down-leave-active,
-.slide-up-enter-active,
-.slide-up-leave-active {
-  transition-duration: 0.5s;
-  transition-property: opacity, transform;
-  transition-timing-function: cubic-bezier(0.55, 0, 0.1, 1);
-  overflow: hidden;
-}
-
-.slide-down-enter,
-.slide-up-leave-active {
-  opacity: 0;
-  transform: translate(0, -2em);
-}
-
-.slide-down-leave-active,
-.slide-up-enter {
-  opacity: 0;
-  transform: translate(0, 2em);
-}
-
 .container {
   width: 100%;
   min-height: 100%;
