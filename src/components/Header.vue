@@ -8,14 +8,14 @@
         >
           <router-link
             v-for="route in this.pages"
-            :key="route.name"
+            :key="getRouteName(route)"
             :to="route.path"
           >
             <v-list-item class="my-1">
               <v-list-item-icon class="item-icon">
-                <v-icon>{{ route.icon }}</v-icon>
+                <v-icon>{{ route.meta.icon }}</v-icon>
               </v-list-item-icon>
-              <v-list-item-title>{{ route.name }}</v-list-item-title>
+              <v-list-item-title>{{ getRouteName(route) }}</v-list-item-title>
             </v-list-item>
           </router-link>
         </v-list-item-group>
@@ -51,10 +51,13 @@ export default {
     toggleDarkMode: function () {
       this.$store.commit('changeTheme');
     },
+    getRouteName: function (route) {
+      return this.$router.match(route.path).name;
+    }
   },
   computed: {
     pages() {
-      return this.$router.options.routes.filter((route) => route.showInMenu);
+      return this.$router.options.routes.filter((route) => route.meta.showInMenu);
     },
   },
 };
