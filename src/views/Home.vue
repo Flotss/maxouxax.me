@@ -6,21 +6,28 @@
       <h3>BUT Informatique</h3>
     </div>
     <div class="buttons">
-      <router-link to="/projects">
-        <v-btn x-large color="primary" dark>
-          <v-icon left> mdi-bookshelf </v-icon>
-          Projets
-        </v-btn>
-      </router-link>
-      <router-link to="/motus">
-        <v-btn outlined x-large color="secondary" dark>
-          <v-icon left> mdi-google-controller </v-icon>
-          Jouer à Motus
-        </v-btn>
-      </router-link>
+      <v-btn x-large color="primary" to="/projects">
+        <v-icon left> mdi-bookshelf </v-icon>
+        Projets
+      </v-btn>
+      <v-btn outlined x-large color="secondary" to="/motus">
+        <v-icon left> mdi-google-controller </v-icon>
+        Jouer à Motus
+      </v-btn>
     </div>
     <div class="announcement pa-6">
-      <iframe width="100%" height="150" :src="'https://odesli.co/embed/?url=https%3A%2F%2Fsong.link%2Fmaxouxax-mess&theme=' + (this.$store.state.theme ? 'dark' : 'light')" frameborder="0" allowfullscreen sandbox="allow-same-origin allow-scripts allow-presentation allow-popups allow-popups-to-escape-sandbox" allow="clipboard-read; clipboard-write"></iframe>
+      <iframe
+        width="100%"
+        height="150"
+        :src="
+          'https://odesli.co/embed/?url=https%3A%2F%2Fsong.link%2Fmaxouxax-mess&theme=' +
+          (this.$store.state.theme ? 'dark' : 'light')
+        "
+        frameborder="0"
+        allowfullscreen
+        sandbox="allow-same-origin allow-scripts allow-presentation allow-popups allow-popups-to-escape-sandbox"
+        allow="clipboard-read; clipboard-write"
+      ></iframe>
     </div>
   </div>
 </template>
@@ -50,7 +57,7 @@ export default {
   align-items: center;
   align-content: center;
 }
-.announcement{
+.announcement {
   width: 100%;
   max-width: 680px;
   display: flex;
