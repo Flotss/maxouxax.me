@@ -39,17 +39,17 @@ export default {
       let routeParts = routePath.split("/");
       routeParts = routeParts.filter((part) => part !== "");
       if (routeParts.length >= 1) {
+        let homeRoute = this.$router.match("/");
         items.push({
-          text: "Accueil",
+          text: homeRoute.name,
           disabled: false,
-          to: "/",
+          to: homeRoute.fullPath,
         });
         routeParts.forEach((part, index) => {
-          let partRoute = this.$router.options.routes.find(
-            (route) => route.path == "/" + part
-          );
-          let name = partRoute ? partRoute.name : part;
-          let routeTo = partRoute ? partRoute.path : "/" + routeParts.slice(0, index + 1).join("/");
+          let aRoute = this.$router.match("/" + routeParts.slice(0, index + 1).join("/"));
+          let routeParams = Object.keys(aRoute.params);
+          let name = routeParams.length >= 1 ? part : aRoute.name;
+          let routeTo = routeParams.length >= 1 ? "/" + routeParts.slice(0, index + 1).join("/") : aRoute.fullPath;
           items.push({
             text: name,
             disabled: routeParts[routeParts.length - 1] == part,
