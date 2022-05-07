@@ -2,6 +2,11 @@
   <div class="project-view fill-height">
     <page-title v-if="!loading" class="mb-16">{{ repository.name }}</page-title>
     <v-skeleton-loader v-if="loading">
+      <v-skeleton-loader
+        class="mx-auto d-flex justify-center mb-16"
+        max-width="800px"
+        type="heading"
+      ></v-skeleton-loader>
       <v-row align="center" justify="center" class="mx-0">
         <v-sheet :width="vSkeletonWidth" class="mx-5 my-4">
           <v-skeleton-loader width="100%" type="card"></v-skeleton-loader>
@@ -93,11 +98,6 @@ export default {
     networkError: false,
     notFound: false,
     repository: null,
-    titleLoader: `<v-skeleton-loader
-      class="mx-auto"
-      max-width="300"
-      type="card"
-    ></v-skeleton-loader>`,
   }),
   methods: {
     getRepository: async function () {
@@ -119,7 +119,11 @@ export default {
             };
           }
         });
-      let mainBranchName = await fetch("https://api.github.com/repos/MAXOUXAX/" + this.projectName + "/branches")
+      let mainBranchName = await fetch(
+        "https://api.github.com/repos/MAXOUXAX/" +
+          this.projectName +
+          "/branches"
+      )
         .then((response) => response.json())
         .then((data) => {
           data.filter((branch) => {
@@ -131,7 +135,8 @@ export default {
       await fetch(
         "https://api.github.com/repos/MAXOUXAX/" +
           this.repository.name +
-          "/branches/" + mainBranchName
+          "/branches/" +
+          mainBranchName
       )
         .then((response) => response.json())
         .then((data) => {
