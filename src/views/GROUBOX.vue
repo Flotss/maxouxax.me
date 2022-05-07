@@ -267,7 +267,7 @@ export default {
     };
   },
   components: {
-    PageTitle
-  }
+    PageTitle,
+  },
 };
 </script>
