@@ -119,16 +119,17 @@ export default {
             };
           }
         });
-      let mainBranchName = await fetch(
+      let mainBranchName;
+      await fetch(
         "https://api.github.com/repos/MAXOUXAX/" +
           this.projectName +
           "/branches"
       )
         .then((response) => response.json())
         .then((data) => {
-          data.filter((branch) => {
+          return data.filter((branch) => {
             if (branch.name == "master" || branch.name == "main") {
-              return branch.name;
+              mainBranchName = branch.name;
             }
           });
         });
