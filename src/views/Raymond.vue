@@ -7,13 +7,13 @@
     </div>
     <div class="invalid d-flex justify-center mx-2" v-show="!valid">
       <v-alert
-        border="left"
-        icon="mdi-alert-circle"
-        :value="!valid"
-        transition="slide-x-transition"
-        elevation="4"
-        type="error"
-        max-width="620px"
+          border="left"
+          icon="mdi-alert-circle"
+          :value="!valid"
+          transition="slide-x-transition"
+          elevation="4"
+          type="error"
+          max-width="620px"
       >
         Une erreur est survenue lors du chargement des informations. Veuillez
         vérifier votre connexion Internet ou l'email fournie.
@@ -28,17 +28,19 @@
             </v-avatar>
             <div class="identity d-flex justify-center flex-column">
               <v-card-title class="text-h3 py-0 font-weight-bold">{{
-                teacher.displayName
-              }}</v-card-title>
+                  teacher.displayName
+                }}
+              </v-card-title>
               <v-card-text class="text-h5 py-0 text--secondary">{{
-                teacher.bcShortLabel
-              }}</v-card-text>
+                  teacher.bcShortLabel
+                }}
+              </v-card-text>
             </div>
           </div>
         </v-card>
       </div>
       <div
-        class="
+          class="
           contact-buttons
           d-flex
           justify-center
@@ -54,22 +56,23 @@
         <v-divider class="mx-16"></v-divider>
         <div class="options full-width d-flex justify-center flex-wrap">
           <v-card
-            v-ripple
-            class="mx-5 my-4 card"
-            :width="$vuetify.breakpoint.name === 'xs' ? '80vw' : '374px'"
-            max-width="374px"
-            min-height="120"
-            elevation="2"
-            outlined
-            v-for="option in options"
-            :key="option.id"
-            :href="option.getUrl(email)"
-            :loading="option.loading"
-            @click="option.onClick()"
-            raised
+              v-ripple
+              class="mx-5 my-4 card"
+              :width="$vuetify.breakpoint.name === 'xs' ? '80vw' : '374px'"
+              max-width="374px"
+              min-height="120"
+              elevation="2"
+              outlined
+              v-for="option in options"
+              :key="option.id"
+              :href="option.getUrl(email)"
+              :loading="option.loading"
+              @click="option.onClick($data)"
+              raised
           >
             <v-card-title>
-              <v-icon left>{{ option.icon }}</v-icon> {{ option.name }}
+              <v-icon left>{{ option.icon }}</v-icon>
+              {{ option.name }}
             </v-card-title>
             <v-card-subtitle>{{ option.description }}</v-card-subtitle>
           </v-card>
@@ -109,8 +112,8 @@ export default {
           loading: false,
           getUrl(email) {
             return (
-              "https://mail.etu.univ-lorraine.fr/zimbra/mail?view=compose&to=" +
-              email
+                "https://mail.etu.univ-lorraine.fr/zimbra/mail?view=compose&to=" +
+                email
             );
           },
           onClick() {
@@ -145,9 +148,9 @@ export default {
           getUrl(email) {
             return null;
           },
-          onClick() {
+          onClick(data) {
             navigator.clipboard.writeText(this.email);
-            copied = true;
+            data.copied = true;
           },
         },
       ],
@@ -158,10 +161,10 @@ export default {
     if (this.email.match(emailPattern)) {
       let id = this.email.match(emailPattern)[1].split(".").join(" ");
       this.teacher = await fetch("/api/raymond/get-info?search=" + id)
-        .then((response) => response.json())
-        .catch(() => {
-          this.valid = false;
-        });
+          .then((response) => response.json())
+          .catch(() => {
+            this.valid = false;
+          });
       if (this.teacher != null && this.teacher.mail != null) {
         this.email = this.decryptEmail(this.teacher.mail);
       }
@@ -192,10 +195,11 @@ export default {
   height: 100%;
   width: 100%;
 }
+
 @media screen and (max-width: 600px) {
   .profile {
     flex-direction: column;
     text-align: center;
-  } 
+  }
 }
 </style>
