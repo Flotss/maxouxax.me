@@ -149,7 +149,7 @@ export default {
             return null;
           },
           onClick(data) {
-            navigator.clipboard.writeText(this.email);
+            navigator.clipboard.writeText(data.email);
             data.copied = true;
           },
         },
