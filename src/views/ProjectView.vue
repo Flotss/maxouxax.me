@@ -61,6 +61,7 @@
               <v-card-actions>
                 <v-btn
                     v-for="action in getActions"
+                    :key="action.text"
                     :color="action.color"
                     target="_blank"
                     rel="noopener"
