@@ -29,7 +29,7 @@ const routes = [
   },
   {
     path: '/projects',
-    component: () => import('../views/Projects.vue'),
+    component: () => import('../views/projects/Projects.vue'),
     meta: {
       icon: "mdi-bookshelf",
       showInMenu: true,
@@ -39,14 +39,13 @@ const routes = [
       {
         path: '',
         name: 'Projets',
-        component: () => import('../views/ProjectsList.vue'),
-
+        component: () => import('../views/projects/ProjectsList.vue'),
       },
       {
         path: ':projectName',
         props: true,
         name: 'Projets - Détails',
-        component: () => import('../views/ProjectView.vue'),
+        component: () => import('../views/projects/ProjectView.vue'),
         meta: {
           icon: "mdi-bookshelf",
           showInMenu: false,
@@ -96,14 +95,38 @@ const routes = [
     }
   },
   {
-    path: '/raymond/teacher/:email',
-    name: 'Raymond',
-    component: () => import('../views/Raymond.vue'),
+    path: '/raymond',
+    component: () => import('../views/raymond/Raymond.vue'),
     meta: {
-      icon: "mdi-email",
-      showInMenu: false,
-      allowEasterEgg: false
-    }
+      icon: "mdi-robot-happy",
+      showInMenu: true,
+      allowEasterEgg: true,
+    },
+    children: [
+      {
+        path: '',
+        name: 'Raymond',
+        component: () => import('../views/raymond/RaymondHome.vue'),
+      },
+      {
+        path: 'teacher',
+        name: 'Professeur',
+        component: () => import('../views/raymond/RaymondTeacher.vue'),
+        children: [
+          {
+            path: ':email',
+            props: true,
+            name: 'On regarde un professeur',
+            component: () => import('../views/raymond/RaymondTeacherView.vue'),
+            meta: {
+              icon: "mdi-email",
+              showInMenu: false,
+              allowEasterEgg: false
+            }
+          }
+        ]
+      }
+    ],
   },
   {
     path: "*",

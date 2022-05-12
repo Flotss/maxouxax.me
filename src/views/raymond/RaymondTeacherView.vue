@@ -95,7 +95,7 @@
 const emailPattern = new RegExp("(.*)(@univ-lorraine.fr)$");
 
 export default {
-  name: "Raymond",
+  name: "RaymondTeacherView",
   data() {
     return {
       teacher: {},
@@ -160,32 +160,15 @@ export default {
     this.email = this.$route.params.email;
     if (this.email.match(emailPattern)) {
       let id = this.email.match(emailPattern)[1].split(".").join(" ");
-      this.teacher = await fetch("/api/raymond/get-info?search=" + id)
+      this.teacher = await fetch("/api/raymond/teacher/info?search=" + id)
           .then((response) => response.json())
           .catch(() => {
             this.valid = false;
           });
-      if (this.teacher != null && this.teacher.mail != null) {
-        this.email = this.decryptEmail(this.teacher.mail);
-      }
     } else {
       this.valid = false;
     }
     this.loading = false;
-  },
-  methods: {
-    decryptEmail(email) {
-      var n = 0;
-      var r = "";
-      for (var i = 0; i < email.length; i++) {
-        n = email.charCodeAt(i);
-        if (n >= 8364) {
-          n = 128;
-        }
-        r += String.fromCharCode(n - 1);
-      }
-      return r;
-    },
   },
 };
 </script>

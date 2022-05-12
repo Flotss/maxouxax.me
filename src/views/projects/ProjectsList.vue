@@ -77,8 +77,8 @@ export default {
         })
         .then((data) => {
           data
-              .filter((repo) => repo.fork == false)
-              .filter((repo) => repo.name != "MAXOUXAX")
+              .filter((repo) => repo.fork === false)
+              .filter((repo) => repo.name !== "MAXOUXAX")
               .forEach((repo) => {
                 this.repos.push({
                   name: repo.name,
@@ -93,7 +93,7 @@ export default {
               });
         })
         .finally(() => {
-          if (this.repos.length == 0) {
+          if (this.repos.length === 0) {
             this.networkError = true;
           } else {
             this.repos.sort((a, b) => {

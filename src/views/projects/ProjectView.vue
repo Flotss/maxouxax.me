@@ -115,7 +115,7 @@ export default {
             return response.json()
           })
           .then((data) => {
-            if (data.message == "Not Found") {
+            if (data.message === "Not Found") {
               this.notFound = true;
             } else {
               this.repository = {
@@ -145,7 +145,7 @@ export default {
           })
           .then((data) => {
             return data.filter((branch) => {
-              if (branch.name == "master" || branch.name == "main") {
+              if (branch.name === "master" || branch.name === "main") {
                 mainBranchName = branch.name;
               }
             });
