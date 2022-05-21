@@ -42,8 +42,8 @@
         v-if="!loading"
         class="project d-flex justify-center align-center align-content-center"
     >
-      <v-container>
-        <v-row class="mb-6 justify-center align-center" no-gutters>
+      <v-container full-width>
+        <v-row class="mb-6 justify-center" no-gutters>
           <v-col>
             <v-card class="ma-5">
               <v-card-title primary-title>
@@ -53,6 +53,11 @@
               <v-card-text>
                 {{ repository.description }}
               </v-card-text>
+            </v-card>
+            <v-card class="ma-5 mt-12">
+              <v-card-title primary-title>README.md</v-card-title>
+              <v-divider></v-divider>
+              <div v-html="compileMarkdown" class="pa-4"></div>
             </v-card>
           </v-col>
           <v-col>
@@ -98,6 +103,7 @@
 <script>
 import GitHubRepository from "@/components/GitHubRepository.vue";
 import PageTitle from "@/components/PageTitle.vue";
+import {marked} from "marked";
 
 export default {
   name: "project-view",
@@ -111,7 +117,7 @@ export default {
     getRepository: async function () {
       await fetch("https://api.github.com/repos/MAXOUXAX/" + this.projectName)
           .then((response) => {
-            if(response.status === 403) throw new Error('Rate limit exceeded');
+            if (response.status === 403) throw new Error('Rate limit exceeded');
             return response.json()
           })
           .then((data) => {
@@ -140,7 +146,7 @@ export default {
           "/branches"
       )
           .then((response) => {
-            if(response.status === 403) throw new Error('Rate limit exceeded');
+            if (response.status === 403) throw new Error('Rate limit exceeded');
             return response.json()
           })
           .then((data) => {
@@ -160,7 +166,7 @@ export default {
           mainBranchName
       )
           .then((response) => {
-            if(response.status === 403) throw new Error('Rate limit exceeded');
+            if (response.status === 403) throw new Error('Rate limit exceeded');
             return response.json()
           })
           .then((data) => {
@@ -168,6 +174,15 @@ export default {
           })
           .catch((error) => {
             this.networkError = true;
+          });
+      this.repository.readme = await fetch("https://raw.githubusercontent.com/MAXOUXAX/" + this.projectName + "/" + mainBranchName + "/README.md")
+          .then((response) => {
+            if (response.status === 403) throw new Error('Rate limit exceeded');
+            return response.text()
+          })
+          .catch((error) => {
+            this.networkError = true;
+            return "";
           });
     },
   },
@@ -233,7 +248,7 @@ export default {
           color: 'secondary',
         },
         {
-          text: this.repository.license.name,
+          text: this.repository.license ? this.repository.license.name : "Aucune licence",
           icon: 'mdi-license',
           color: 'secondary',
         },
@@ -249,10 +264,17 @@ export default {
           text: "Voir sur GitHub",
           icon: 'mdi-github',
           color: 'primary',
-          href: this.repository.html_url,
+          href: this.repository.url,
         }
       ]
-    }
+    },
+    compileMarkdown() {
+      if (this.repository == null) {
+        return "";
+      }
+
+      return marked(this.repository.readme);
+    },
   },
   props: {
     projectName: String,
