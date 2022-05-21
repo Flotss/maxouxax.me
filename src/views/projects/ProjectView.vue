@@ -63,7 +63,7 @@
           <v-col>
             <v-card class="ma-5">
               <v-card-title primary-title> Actions</v-card-title>
-              <v-card-actions>
+              <v-card-actions class="pa-4">
                 <v-btn
                     v-for="action in getActions"
                     :key="action.text"
