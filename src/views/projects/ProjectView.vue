@@ -345,7 +345,7 @@ export default {
 .project {
   width: 100%;
 }
-.v-btn__content{
+.v-btn__content::deep{
   height: 100%;
 }
 </style>
