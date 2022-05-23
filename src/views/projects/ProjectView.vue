@@ -71,6 +71,7 @@
                     target="_blank"
                     rel="noopener"
                     :href="action.href"
+                    @click="action.onClick($data)"
                 >
                   <v-icon left> {{ action.icon }}</v-icon>
                   {{ action.text }}
@@ -265,7 +266,28 @@ export default {
           icon: 'mdi-github',
           color: 'primary',
           href: this.repository.url,
-        }
+          onClick(){
+            //TODO: Double check that
+          }
+        },
+        {
+          text: "Clone (SSH)",
+          icon: 'mdi-powershell",
+          color: 'info',
+          href: null,
+          onClick(data){
+            navigator.clipboard.writeText("git@github.com:MAXOUXAX/" + data.repository.name + ".git");
+          }
+        },
+        {
+          text: "Clone (HTTPS)",
+          icon: 'mdi-lock",
+          color: 'info',
+          href: null,
+          onClick(data){
+            navigator.clipboard.writeText(data.repository.url + ".git");
+          }
+        },
       ]
     },
     compileMarkdown() {
