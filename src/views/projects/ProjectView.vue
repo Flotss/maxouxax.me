@@ -272,8 +272,8 @@ export default {
         },
         {
           text: "Clone (SSH)",
-          icon: 'mdi-powershell",
-          color: 'info',
+          icon: "mdi-powershell",
+          color: "info",
           href: null,
           onClick(data){
             navigator.clipboard.writeText("git@github.com:MAXOUXAX/" + data.repository.name + ".git");
@@ -281,8 +281,8 @@ export default {
         },
         {
           text: "Clone (HTTPS)",
-          icon: 'mdi-lock",
-          color: 'info',
+          icon: "mdi-lock",
+          color: "info",
           href: null,
           onClick(data){
             navigator.clipboard.writeText(data.repository.url + ".git");
