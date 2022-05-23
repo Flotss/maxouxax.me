@@ -76,6 +76,14 @@
                   <v-icon left> {{ action.icon }}</v-icon>
                   {{ action.text }}
                 </v-btn>
+                <v-snackbar elevation="12" v-model="copied" timeout="3000">
+                  Adresse copiée !
+                  <template v-slot:action="{ attrs }">
+                    <v-btn color="info" text v-bind="attrs" @click="copied = false">
+                      Fermer
+                    </v-btn>
+                  </template>
+                </v-snackbar>
               </v-card-actions>
               <v-divider></v-divider>
               <v-card-text>
@@ -113,6 +121,7 @@ export default {
     networkError: false,
     notFound: false,
     repository: null,
+    copied: false,
   }),
   methods: {
     getRepository: async function () {
@@ -273,19 +282,21 @@ export default {
         {
           text: "Clone (SSH)",
           icon: "mdi-powershell",
-          color: "info",
+          color: "accent",
           href: null,
           onClick(data){
             navigator.clipboard.writeText("git@github.com:MAXOUXAX/" + data.repository.name + ".git");
+            data.copied = true;
           }
         },
         {
           text: "Clone (HTTPS)",
           icon: "mdi-lock",
-          color: "info",
+          color: "accent",
           href: null,
           onClick(data){
             navigator.clipboard.writeText(data.repository.url + ".git");
+            data.copied = true;
           }
         },
       ]
