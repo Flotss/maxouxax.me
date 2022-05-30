@@ -71,7 +71,7 @@
                     rel="noopener"
                     :href="action.href"
                     @click="action.onClick($data)"
-                    class="ma-0 mr-1 mt-1 d-inline-block"
+                    :class="'ma-0 mr-1 mt-1 ' + (action.href ? 'd-inline-block' : '')"
                   >
                     <v-icon left> {{ action.icon }}</v-icon>
                     <span style="white-space: normal">{{ action.text }}</span>
